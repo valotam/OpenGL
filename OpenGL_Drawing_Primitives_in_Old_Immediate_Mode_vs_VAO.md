@@ -6,10 +6,14 @@ Method Development
 
 from Past to Present
 
-```mermaid
-graph LR
-  i1["glBegin and glEnd(Immediate Mode)"] --> i2["Display Lists, VAO(Vertex Array Objects) "]
-i2 --> i3["VBO(Vertex Buffer Objects)"]
+```wavedrom
+{signal: [
+  ['Development',
+  {  name: ' ',  wave: '3......xxxxxxxx', data: ['glBegin and glEnd(Immediate Mode)']},
+  {  name: ' ', wave: 'xxxx4......xxxx', data: ['Display Lists, VAO(Vertex Array Objects)']},
+  {name: ' ', wave: 'xxxxxxxxx5.....', data: ['VBO(Vertex Buffer Objects)']},
+  ],
+]}
 ```
 
 The only thing you will not be able to do in **Immediate Mode** is to use **OpenGL Shading Language** (**GLSL**). Note, however, although different methods of rendering, it is possible to mix drawing in Immediate Mode and with GLSL by switching between the two within the same OpenGL program. Having said this, GLSL is a much more powerful rendering technique. And anything you can do in Immediate Mode can be done in GLSL with salt and pepper added.
