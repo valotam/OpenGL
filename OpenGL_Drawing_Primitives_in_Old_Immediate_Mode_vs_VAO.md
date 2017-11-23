@@ -10,8 +10,8 @@ from Past to Present
 {signal: [
   ['Development',
   {  name: ' ',  wave: '3......xxxxxxxx', data: ['glBegin and glEnd(Immediate Mode)']},
-  {  name: ' ', wave: 'xxxx4......xxxx', data: ['Display Lists, VAO(Vertex Array Objects)']},
-  {name: ' ', wave: 'xxxxxxxxx5.....', data: ['VBO(Vertex Buffer Objects)']},
+  {  name: ' ', wave: 'xxxxxx4...xxxxx', data: ['Display Lists']},
+  {name: ' ', wave: 'xxxx5..........', data: ['VAO(Vertex Array Objects), VBO(Vertex Buffer Objects)']},
   ],
 ]}
 ```
@@ -112,8 +112,8 @@ int main(int argc, char const *argv[]) {
 }
 ```
 
-[Tutorials](www.opengl-tutorial.org/beginners-tutorials/tutorial-2-the-first-triangle)
-======================================================================================
+[Tutorials](http://www.opengl-tutorial.org/beginners-tutorials/tutorial-2-the-first-triangle)
+=============================================================================================
 
 References
 ==========

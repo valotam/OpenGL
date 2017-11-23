@@ -15,3 +15,9 @@
 
 [Modern OpenGL 3.0 Tutorials with youtube link](https://www.youtube.com/watch?annotation_id=annotation_3716210897&feature=iv&index=2&list=PLRtjMdoYXLf6zUMDJVRZYV-6g6n62vet8&src_vid=vGptI11wRxE&v=mGC4T9AG4nc)
 ===============================================================================================================================================================================================================
+
+[Modern OpenGL Development Tutorial](http://ogldev.atspace.co.uk/index.html)
+============================================================================
+
+[OpenGL Lec.](http://alleysark.tistory.com/264?category=543622)
+===============================================================

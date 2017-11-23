@@ -8,7 +8,6 @@ STEP 1. includes and defines
 #include <iostream>
 
 // GLEW
-#define GLEW_STATIC
 #include <GL/glew.h>
 
 // GLFW
@@ -79,7 +78,7 @@ int main()
 {
   ...
 
-  GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", nullptr, nullptr);
+  GLFWwindow * window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", nullptr, nullptr);
 
   int screenWidth, screenHeight;
   glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
@@ -198,7 +197,6 @@ Source codes
 #include <iostream>
 
 // GLEW
-//#define GLEW_STATIC
 #include <GL/glew.h>
 
 // GLFW
@@ -221,7 +219,7 @@ int main()
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", nullptr, nullptr);
+    GLFWwindow * window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", nullptr, nullptr);
 
     int screenWidth, screenHeight;
     glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
