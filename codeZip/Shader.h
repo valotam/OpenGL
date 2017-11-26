@@ -8,18 +8,18 @@
 #include <vector>
 #include <GL/glew.h>
 
-typedef struct _coordi
+typedef struct _vertexAttri
 {
-	GLfloat x;
-	GLfloat y;
-}Coordinate;
+	GLfloat x, y, z;
+	GLfloat r, g, b;
+}VertexAttribute;
 
 class Shader
 {
 public:
 	GLfloat * Vertices;
 	GLuint Indices;
-	std::vector<Coordinate> vCoordinates;
+	std::vector<VertexAttribute> vVertexAttribute;
 
 	GLuint Program;
 	// Constructor generates the shader on the fly
@@ -128,7 +128,7 @@ public:
 			std::cout << "ERROR::SHADER::.out_FILE_NOT_SUCCESFULLY_READ" << std::endl;
 			return GL_FALSE;
 		}
-		const GLchar *vShaderCode = vertexCode.c_str();
+		//const GLchar *vShaderCode = vertexCode.c_str();
 
 		std::vector<std::string> vContainer;
 		split(vertexCode, vContainer);
@@ -147,15 +147,10 @@ public:
 					return GL_FALSE;
 				}
 				Vertices = new GLfloat[std::stoi(coorSet[0]) * 3];
+				vVertexAttribute.reserve(std::stoi(coorSet[0]));
 			}
 			else
 			{
-				//if (verticesIndex == 0)
-				//{
-				//	std::cout << "ERROR::SHADER::MISSED_VERTEX_COORDINATE" << std::endl;
-				//	continue;
-				//}
-
 				double x = std::stof(coorSet[0]);	// string to double
 				double y = std::stof(coorSet[1]);
 
@@ -166,6 +161,9 @@ public:
 					Vertices[verticesIndex++] = x;
 					Vertices[verticesIndex++] = y;
 					Vertices[verticesIndex++] = 1.0f;
+
+					VertexAttribute vVA = { x, y, 1.0f, 1.0f, 1.0f, 1.0f };
+					vVertexAttribute.push_back(vVA);
 				}
 			}
 		}
@@ -188,6 +186,11 @@ public:
 		{
 			delete[] Vertices;
 			std::cout << "DONE!" << std::endl;
+		}
+		if (!vVertexAttribute.empty())
+		{
+			vVertexAttribute.clear();
+			
 		}
 
 	}
