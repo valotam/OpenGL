@@ -62,49 +62,93 @@ int main()
 	glViewport(0, 0, screenWidth, screenHeight);
 
 	// Build and compile our shader program
-	Shader ourShader("core_mat.vertexshader", "core_mat.fragmentshader");
-
-	ourShader.LoadOutFile("foil_spline.out");
-	GLfloat * pVertices = ourShader.Vertices;
-	
+	Shader ourShader("core_mat.vertexshader", "core_mat.fragmentshader");	
+	//ourShader.LoadOutFile("foil_spline.out");
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat vertices[] =
 	{
-		// Positions          // Colors           // Texture Coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,//   1.0f, 1.0f, // Top Right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,//   1.0f, 0.0f, // Bottom Right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,//   0.0f, 0.0f, // Bottom Left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f//,   0.0f, 1.0f  // Top Left
+		// Positions      
+		0.5f,  0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+		-0.5f,  0.5f, 0.0f
+	};
+	GLfloat colors[] =
+	{
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f
 	};
 	GLuint indices[] =
 	{  // Note that we start from 0!
 		0, 1, 3, // First Triangle
 		1, 2, 3  // Second Triangle
 	};
-	GLuint VBO, VAO, EBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+
+
+	GLuint VAO; 	                    // this will hold the "name" of the vertex array
+	glGenVertexArrays(1, &VAO); 	    // only need one vertex array, where to put its name
+
+	glBindVertexArray(VAO);             // actually allocate that array
+
+	GLuint VBO[2];                      // this will hold the "names" of the buffers on the GPU
+	glGenBuffers(2, VBO);               // get two unused buffer names
+
+	GLuint position_buffer = VBO[0];	// just a mnemonic
+	GLuint color_buffer = VBO[1];
+	glBindBuffer(GL_ARRAY_BUFFER, position_buffer); // say what we're using it for
+	glBufferData(GL_ARRAY_BUFFER, 	// which buffer are we filling?
+		sizeof(vertices),	        // how many bytes of data to send to GPU?
+		vertices,		            // where are they?
+		GL_STATIC_DRAW);	        // tell GPU that we're not planning to change
+							        // the data at run-time, and the
+							        // information will go one-way from
+							        // application to GPU
+							        // (which affects how it stores the data)
+							        // Agree on what GLSL attribute(s) should receive the data we're going to
+							        // send with glDrawElements()
+
+	GLuint vp = glGetAttribLocation(ourShader.Program, "position");
+	glEnableVertexAttribArray(vp);	// use this info in glDrawElements() et al.
+									// Next, tell the vertex array object that values of the "position"
+									// variable should come from the current ARRAY_BUFFER, and how this
+									// array is organized.  Note that "current" means "whichever buffer
+									// was most recently bound to GL_ARRAY_BUFFER as of the time
+									// glVertexAttribPointer is called."
+	glVertexAttribPointer(vp,		// which shared variable are we using?
+		3,		                    // dimensions in "position"
+		GL_FLOAT,	                // element type in "position"
+		GL_FALSE,	                // don't normalize to [-1,1] range
+		0,		                    // distance between elements of "position"
+		(GLvoid*)(0));              // how far to start from beginning of the current
+	                                // ARRAY_BUFFER, which is position_buffer.
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, color_buffer); // let's do it again with the color buffer
+	glBufferData(GL_ARRAY_BUFFER,
+		sizeof(colors),
+		colors,
+		GL_STATIC_DRAW);
+	GLuint vc = glGetAttribLocation(ourShader.Program, "color");
+	glEnableVertexAttribArray(vc); // pay attention to color info too
+	glVertexAttribPointer(vc,
+		3,		                   // dimensions
+		GL_FLOAT,	               // element type
+		GL_FALSE,	               // don't normalize
+		0,		                   // stride
+		(GLvoid*)(0));
+
+	GLuint EBO;
 	glGenBuffers(1, &EBO);
-
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	// Position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)0);
-	glEnableVertexAttribArray(0);
-	// Color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-
 	glBindVertexArray(0); // Unbind VAO
 
-						  // Game loop
+	// loop
 	while (!glfwWindowShouldClose(window))
 	{
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
@@ -123,7 +167,7 @@ int main()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		// Draw the triangle
-		ourShader.Use();
+		glUseProgram(ourShader.Program);
 
 		// Create transformations
 		glm::mat4 transform;
@@ -146,7 +190,7 @@ int main()
 
 	// Properly de-allocate all resources once they've outlived their purpose
 	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(2, VBO);
 	glDeleteBuffers(1, &EBO);
 
 	// Terminate GLFW, clearing any resources allocated by GLFW.

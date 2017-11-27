@@ -17,8 +17,6 @@ typedef struct _vertexAttri
 class Shader
 {
 public:
-	GLfloat * Vertices;
-	GLuint Indices;
 	std::vector<VertexAttribute> vVertexAttribute;
 
 	GLuint Program;
@@ -128,7 +126,6 @@ public:
 			std::cout << "ERROR::SHADER::.out_FILE_NOT_SUCCESFULLY_READ" << std::endl;
 			return GL_FALSE;
 		}
-		//const GLchar *vShaderCode = vertexCode.c_str();
 
 		std::vector<std::string> vContainer;
 		split(vertexCode, vContainer);
@@ -146,23 +143,19 @@ public:
 					std::cout << "ERROR::SHADER::VERTEX_SIZE_CHANGED" << std::endl;
 					return GL_FALSE;
 				}
-				Vertices = new GLfloat[std::stoi(coorSet[0]) * 3];
 				vVertexAttribute.reserve(std::stoi(coorSet[0]));
 			}
 			else
 			{
-				double x = std::stof(coorSet[0]);	// string to double
-				double y = std::stof(coorSet[1]);
+				double x = std::stof(coorSet[0])/ 7.5f;	// string to double
+				double y = std::stof(coorSet[1])/ 7.5f;
+				double z = 1.0f;
 
 				coorSet.clear();
 
-				if (Vertices != NULL)
+				if (verticesIndex++ < vVertexAttribute.capacity())
 				{
-					Vertices[verticesIndex++] = x;
-					Vertices[verticesIndex++] = y;
-					Vertices[verticesIndex++] = 1.0f;
-
-					VertexAttribute vVA = { x, y, 1.0f, 1.0f, 1.0f, 1.0f };
+					VertexAttribute vVA = { x, y, z, 1.0f, 1.0f, 1.0f };
 					vVertexAttribute.push_back(vVA);
 				}
 			}
@@ -182,11 +175,6 @@ public:
 	}
 
 	~Shader() { 
-		if (Vertices)
-		{
-			delete[] Vertices;
-			std::cout << "DONE!" << std::endl;
-		}
 		if (!vVertexAttribute.empty())
 		{
 			vVertexAttribute.clear();
