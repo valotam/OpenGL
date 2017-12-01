@@ -1,5 +1,5 @@
-﻿#include <GL/glew.h>		
-#include <GLFW/glfw3.h> 
+﻿#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
 
 
@@ -126,9 +126,9 @@ bool defineVertexArrayObject() {
 		position[9*i+3] = position[9*i+0] + sizeOfTriangle;
 		position[9*i+6] = position[9*i+0] + sizeOfTriangle / 2.0f;
 		position[9*i+7] = position[9*i+1] + sizeOfTriangle;
-		
+
 		if (position[9 * i + 3] > 1 || position[9 * i + 3] < -1 ||
-			position[9 * i + 6] > 1 || position[9 * i + 6] < -1 || 
+			position[9 * i + 6] > 1 || position[9 * i + 6] < -1 ||
 			position[9 * i + 7] > 1 || position[9 * i + 7] < -1)
 		{
 			cout << "ERROR: Out of viewport, resize the triangle!" << endl;
@@ -138,13 +138,13 @@ bool defineVertexArrayObject() {
 
 	float color[] = {
 		1.0f, 0.0f, 0.0f, //vertex 1-1 : RED (1,0,0)
-		0.0f, 1.0f, 0.0f, //vertex 1-2 : GREEN (0,1,0) 
+		0.0f, 1.0f, 0.0f, //vertex 1-2 : GREEN (0,1,0)
 		0.0f, 0.0f, 1.0f, //vertex 1-3 : BLUE (0,0,1)
 		1.0f, 0.0f, 0.0f, //vertex 2-1 : RED (1,0,0)
-		0.0f, 1.0f, 0.0f, //vertex 2-2 : GREEN (0,1,0) 
+		0.0f, 1.0f, 0.0f, //vertex 2-2 : GREEN (0,1,0)
 		0.0f, 0.0f, 1.0f, //vertex 2-3 : BLUE (0,0,1)
 		1.0f, 0.0f, 0.0f, //vertex 3-1 : RED (1,0,0)
-		0.0f, 1.0f, 0.0f, //vertex 3-2 : GREEN (0,1,0) 
+		0.0f, 1.0f, 0.0f, //vertex 3-2 : GREEN (0,1,0)
 		0.0f, 0.0f, 1.0f  //vertex 3-3 : BLUE (0,0,1)
 	};
 
@@ -311,7 +311,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3*3);
-
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
