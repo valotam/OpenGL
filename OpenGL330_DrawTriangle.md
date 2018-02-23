@@ -219,9 +219,12 @@ int main()
   glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( GLfloat ), ( GLvoid * ) 0 );
   glEnableVertexAttribArray( 0 );
 
-  glBindBuffer( GL_ARRAY_BUFFER, 0 ); // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
+  // Note that this is allowed, the call to glVertexAttribPointer registered VBO
+  // as the currently bound vertex buffer object so afterwards we can safely unbind
+  glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
-  glBindVertexArray( 0 ); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
+  // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
+  glBindVertexArray( 0 );
 
   ...
 }
@@ -327,7 +330,8 @@ int main()
 
     glfwMakeContextCurrent( window );
 
-    // Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
+    // Set this to true so GLEW knows to use a modern approach to
+    // retrieving function pointers and extensions
     glewExperimental = GL_TRUE;
     // Initialize GLEW to setup the OpenGL Function pointers
     if ( GLEW_OK != glewInit( ) )
@@ -410,14 +414,18 @@ int main()
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( GLfloat ), ( GLvoid * ) 0 );
     glEnableVertexAttribArray( 0 );
 
-    glBindBuffer( GL_ARRAY_BUFFER, 0 ); // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
+    // Note that this is allowed, the call to glVertexAttribPointer registered VBO
+    // as the currently bound vertex buffer object so afterwards we can safely unbind
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
-    glBindVertexArray( 0 ); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
+    // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
+    glBindVertexArray( 0 );
 
     // Game loop
     while ( !glfwWindowShouldClose( window ) )
     {
-        // Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+        // Check if any events have been activiated (key pressed, mouse moved etc.) and
+        // call corresponding response functions
         glfwPollEvents( );
 
         // Render

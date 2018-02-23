@@ -159,7 +159,8 @@ int main()
 
   while (!glfwWindowShouldClose(window))
     {
-        // Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+        // Check if any events have been activiated (key pressed, mouse moved etc.) and
+        // call corresponding response functions
         glfwPollEvents();
 
         // Render
@@ -234,7 +235,8 @@ int main()
 
     glfwMakeContextCurrent(window);
 
-    // Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
+    // Set this to true so GLEW knows to use a modern approach to retrieving
+    // function pointers and extensions
     glewExperimental = GL_TRUE;
     // Initialize GLEW to setup the OpenGL Function pointers
     if (GLEW_OK != glewInit())
@@ -249,7 +251,8 @@ int main()
     // Game loop
     while (!glfwWindowShouldClose(window))
     {
-        // Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+        // Check if any events have been activiated (key pressed, mouse moved etc.) and
+        // call corresponding response functions
         glfwPollEvents();
 
         // Render
